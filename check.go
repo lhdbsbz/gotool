@@ -15,7 +15,6 @@ func IsEmpty(in interface{}) bool {
 		return true
 	}
 	value := reflect.ValueOf(in)
-	fmt.Println(value.Kind())
 	switch value.Kind() {
 	case reflect.String:
 		return len(strings.TrimSpace(value.String())) == 0
