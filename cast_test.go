@@ -55,3 +55,13 @@ func TestToMillisecond(t *testing.T) {
 		})
 	}
 }
+
+func TestMillisecondToTime(t *testing.T) {
+	now := time.Now()
+	millisecond := ToMillisecond(now)
+	toTime := MillToTime(millisecond)
+	toMillisecond := ToMillisecond(toTime)
+	if millisecond != toMillisecond {
+		t.Errorf("MillToTime() = %v, want %v", toMillisecond, millisecond)
+	}
+}

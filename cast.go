@@ -29,3 +29,16 @@ func ToMillisecondNil(in *time.Time) *int64 {
 	result := in.UnixNano() / int64(time.Millisecond)
 	return &result
 }
+
+// MillToTime 毫秒转时间
+func MillToTime(in int64) time.Time {
+	return *MillToTimeNil(&in)
+}
+
+func MillToTimeNil(in *int64) *time.Time {
+	if in == nil {
+		return nil
+	}
+	unix := time.Unix(0, *in*int64(time.Millisecond))
+	return &unix
+}
