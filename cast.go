@@ -42,3 +42,28 @@ func MillToTimeNil(in *int64) *time.Time {
 	unix := time.Unix(0, *in*int64(time.Millisecond))
 	return &unix
 }
+
+// SecondToTime 秒转时间
+func SecondToTime(in int64) time.Time {
+	return *SecondToTimeNil(&in)
+}
+
+func SecondToTimeNil(in *int64) *time.Time {
+	if in == nil {
+		return nil
+	}
+	unix := time.Unix(0, *in*int64(time.Second))
+	return &unix
+}
+
+// ToSecond 时间转秒
+func ToSecond(in time.Time) int64 {
+	return *ToSecondNil(&in)
+}
+func ToSecondNil(in *time.Time) *int64 {
+	if in == nil {
+		return nil
+	}
+	result := in.UnixNano() / int64(time.Second)
+	return &result
+}

@@ -65,3 +65,12 @@ func TestMillisecondToTime(t *testing.T) {
 		t.Errorf("MillToTime() = %v, want %v", toMillisecond, millisecond)
 	}
 }
+
+func TestToSecond(t *testing.T) {
+	now := time.Now()
+	millisecond := ToMillisecond(now)
+	toSecond := ToSecond(now)
+	if toSecond != millisecond/1000 {
+		t.Errorf("ToSecond() = %v, want %v", toSecond, millisecond/1000)
+	}
+}
