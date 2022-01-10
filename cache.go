@@ -18,7 +18,7 @@ type MemCache struct {
 }
 
 type MemCacheinterface interface {
-	Init(*MemCache) *MemCache
+	Init() *MemCache
 	Info() string
 	Size() int
 	Put(key string, value interface{})
@@ -49,7 +49,7 @@ func (item *MemCache) Remove(key string) (value interface{}) {
 	return
 }
 
-func Init(item *MemCache) *MemCache {
+func (item *MemCache) Init() *MemCache {
 	item.kv = make(map[string]interface{})
 	if IsNotEmpty(item.Corn) {
 		item.c = cron.New()
