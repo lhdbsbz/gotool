@@ -8,7 +8,7 @@ import (
 
 type MemCacheType string
 
-var TimedClear MemCacheType = "定时清除"
+var MemCacheTypeTimedClear MemCacheType = "定时清除"
 
 type MemCache struct {
 	Type MemCacheType
@@ -67,7 +67,7 @@ func (item *MemCache) Clear() {
 
 func (item *MemCache) doCorn() {
 	switch item.Type {
-	case TimedClear:
+	case MemCacheTypeTimedClear:
 		item.Clear()
 	}
 }
