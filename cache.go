@@ -3,7 +3,7 @@ package gotool
 import (
 	"fmt"
 
-	"github.com/robfig/cron/v3"
+	"github.com/robfig/cron"
 )
 
 type MemCacheType string
@@ -18,7 +18,6 @@ type MemCache struct {
 }
 
 type MemCacheinterface interface {
-	Init() *MemCache
 	Info() string
 	Size() int
 	Put(key string, value interface{})
@@ -49,14 +48,19 @@ func (item *MemCache) Remove(key string) (value interface{}) {
 	return
 }
 
-func (item *MemCache) Init() *MemCache {
+func InitMemCache(memCacheType MemCacheType, corn string) *MemCache {
+	item := &MemCache{
+		Type: memCacheType,
+		Corn: corn,
+	}
 	item.kv = make(map[string]interface{})
 	if IsNotEmpty(item.Corn) {
 		item.c = cron.New()
-		_, _ = item.c.AddFunc(item.Corn, item.doCorn)
-	}
-	if item.c != nil {
-		item.c.Start()
+		if err := item.c.AddFunc(item.Corn, item.doCorn); err == nil {
+			item.c.Start()
+		} else {
+			panic(err)
+		}
 	}
 	return item
 }
@@ -66,6 +70,7 @@ func (item *MemCache) Clear() {
 }
 
 func (item *MemCache) doCorn() {
+	fmt.Println("开始执行corn")
 	switch item.Type {
 	case MemCacheTypeTimedClear:
 		item.Clear()
